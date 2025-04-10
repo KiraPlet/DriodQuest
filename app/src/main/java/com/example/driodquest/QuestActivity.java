@@ -1,6 +1,7 @@
 package com.example.driodquest;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -13,6 +14,8 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 public class QuestActivity extends AppCompatActivity {
+    private static final String TAG = "QuestActivity";
+    private static final String KEY_INDEX = "index";
     private Button mTrueButton;
     private Button mFalseButton;
     private Button mNextButton;
@@ -42,10 +45,36 @@ public class QuestActivity extends AppCompatActivity {
         }
         Toast.makeText(this, messageResId, Toast.LENGTH_SHORT).show();
     }
-    @SuppressLint("MissingInflatedId")
+    @Override
+    public void onStart() {
+        super.onStart();
+        Log.d(TAG, "onStart() вызван");
+    }
+    @Override
+    public void onPause() {
+        super.onPause();
+        Log.d(TAG, "onPause() вызван");
+    } @Override
+    public void onResume() {
+        super.onResume();
+        Log.d(TAG, "onResume() вызван");
+    }
+    @Override
+    public void onStop() {
+        super.onStop();
+        Log.d(TAG, "onStop() вызван");
+    }
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.d(TAG, "onDestroy() вызван");
+    }
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d(TAG, "onCreate(Bundle) вызван");
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_quest);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
@@ -55,9 +84,6 @@ public class QuestActivity extends AppCompatActivity {
         });
         mQuestionTextView =
                 (TextView) findViewById(R.id.question_text_view);
-
-
-
         mTrueButton = (Button) findViewById(R.id.true_button);
         mTrueButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,6 +91,9 @@ public class QuestActivity extends AppCompatActivity {
                 checkAnswer(true);
             }
         });
+        if (savedInstanceState != null) {
+            mCurrentIndex = savedInstanceState.getInt(KEY_INDEX, 0);
+        }
         mFalseButton = (Button) findViewById(R.id.false_button);
         mFalseButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,7 +101,7 @@ public class QuestActivity extends AppCompatActivity {
                 checkAnswer(false);
             }
         });
-        mNextButton = (Button)findViewById(R.id.next_button);
+        mNextButton = (Button) findViewById(R.id.next_button);
         mNextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -80,6 +109,7 @@ public class QuestActivity extends AppCompatActivity {
                 updateQuestion();
             }
         });
+        updateQuestion();
         mBackButton = (Button)findViewById(R.id.back_button);
         mBackButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,10 +118,13 @@ public class QuestActivity extends AppCompatActivity {
                 updateQuestion();
             }
         });
-
         updateQuestion();
-
-
+    }
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+        Log.i(TAG, "onSaveInstanceState");
+        savedInstanceState.putInt(KEY_INDEX, mCurrentIndex);
     }
 
 }

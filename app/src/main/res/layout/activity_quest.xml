@@ -41,28 +41,39 @@
 
     </LinearLayout>
 
+
     <LinearLayout
         android:id="@+id/linearLayoutBN"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
         android:orientation="horizontal"
-        android:layout_gravity="bottom|right"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout">
 
         <Button
             android:id="@+id/back_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="bottom|left"
             android:text="@string/back_button"
-            android:layout_gravity="bottom|right"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+
+        <Button
+            android:id="@+id/deceit_button"
+            android:layout_width="197dp"
+            android:layout_height="99dp"
+            android:layout_gravity="bottom|center"
+            android:backgroundTint="#FFEB3B"
+            android:text="@string/deceit_button"
+            android:textColor="#E91E63"
+            android:textSize="28dp" />
 
         <Button
             android:id="@+id/next_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/next_button"
             android:layout_gravity="bottom|right"
+            android:text="@string/next_button"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
     </LinearLayout>
